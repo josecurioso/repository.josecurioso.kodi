@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addons>
+<addon id="repository.josecurioso.kodi" name="Josecurioso's addons" version="1.0.1" provider-name="josecurioso">
+	<extension point="xbmc.addon.repository" name="Josecurioso's addons">
+		<info compressed="false">http://raw.github.com/josecurioso/repository.josecurioso.kodi/master/addons.xml</info>
+		<checksum>http://raw.github.com/josecurioso/repository.josecurioso.kodi/master/addons.xml.md5</checksum>
+		<datadir zip="true">http://raw.github.com/josecurioso/repository.josecurioso.kodi/master/repo/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Addon repository by josecurioso</summary>
+		<description></description>
+		<disclaimer></disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>
+
+<addon id="service.subtitles.tusubtitulo"
+       name="TuSubtitulo.com"
+       version="1.2.1"
+       provider-name="josecurioso">
+  <requires>
+    <import addon="xbmc.python" version="2.25.0"/>
+    <import addon="script.module.beautifulsoup4" version="4.5.3"/>
+  </requires>
+  <extension point="xbmc.subtitle.module" library="service.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">TuSubtitulo.com (unofficial)</summary>
+    <description lang="en_GB">Search and download subtitles from TuSubtitulo.com</description>
+    <disclaimer lang="en_GB">This is not an official work from the site admins</disclaimer>
+	<language>es en</language>
+    <platform>all</platform>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <forum></forum>
+    <website></website>
+    <email></email>
+    <source>https://github.com/josecurioso2/service.subtitles.tusubtitulo</source>
+  </extension>
+</addon>
+</addons>
