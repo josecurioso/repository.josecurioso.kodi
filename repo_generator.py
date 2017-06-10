@@ -19,12 +19,13 @@
 # *
 # *  Based on code by j48antialias:
 # *  https://anarchintosh-projects.googlecode.com/files/addons_xml_generator.py
- 
+
 """ addons.xml generator """
- 
+
 import os
 import sys
- 
+import zipper
+
 # Compatibility with 3.0, 3.1 and 3.2 not supporting u"" literals
 if sys.version < '3':
     import codecs
@@ -33,7 +34,7 @@ if sys.version < '3':
 else:
     def u(x):
         return x
- 
+
 class Generator:
     """
         Generates a new addons.xml file from each addons addon.xml file
@@ -46,7 +47,7 @@ class Generator:
         self._generate_md5_file()
         # notify user
         print("Finished updating addons xml and md5 files")
- 
+
     def _generate_addons_file( self ):
         # addon list
         addons = os.listdir( "." )
@@ -81,7 +82,7 @@ class Generator:
         addons_xml = addons_xml.strip() + u("\n</addons>\n")
         # save file
         self._save_file( addons_xml.encode( "UTF-8" ), file="addons.xml" )
- 
+
     def _generate_md5_file( self ):
         # create a new md5 hash
         try:
@@ -90,14 +91,14 @@ class Generator:
         except ImportError:
             import hashlib
             m = hashlib.md5( open( "addons.xml", "r", encoding="UTF-8" ).read().encode( "UTF-8" ) ).hexdigest()
- 
+
         # save file
         try:
             self._save_file( m.encode( "UTF-8" ), file="addons.xml.md5" )
         except Exception as e:
             # oops
             print("An error occurred creating addons.xml.md5 file!\n%s" % e)
- 
+
     def _save_file( self, data, file ):
         try:
             # write data to the file (use b for Python 3)
@@ -105,8 +106,42 @@ class Generator:
         except Exception as e:
             # oops
             print("An error occurred saving %s file!\n%s" % ( file, e ))
- 
- 
+
+
+class Reorganizer:
+    """
+        Reorganizes the file structure to add the new versions.
+    """
+    def __init__( self ):
+        # generate files
+        self.populateRepoFolders()
+        # notify user
+        print("Finished populating the folders")
+
+    def populateRepoFolders( self ):
+        # addon list
+        addons = os.listdir( "." )
+        for addon in addons:
+            try:
+                # skip any file or .svn folder or .git folder
+                if ( not os.path.isdir( addon ) or addon == ".svn" or addon == ".git" ): continue
+                # create path
+                xmlPath = os.path.join( addon, "addon.xml" )
+                addon = addon + os.sep
+                print
+                print xmlPath
+                print addon
+                print
+                zipper.createAddonZip(addon, xmlPath)
+                zipper.populateRepo(xmlPath)
+            except Exception as e:
+                # missing or poorly formatted addon.xml
+                print("Excluding %s for %s" % ( xmlPath, e ))
+        # clean and add closing tag
+        # save file
+
+
 if ( __name__ == "__main__" ):
     # start
     Generator()
+    Reorganizer()
