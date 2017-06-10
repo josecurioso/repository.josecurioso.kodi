@@ -3,7 +3,7 @@
 
 Kodi repository for addons either created by me or forked and modified. You can download it from the release page and, once installed, it will auto-update itself and its addons whenever new releases are available.
 
-## Current contents:
+## Current contents
 - service.subtitles.tusubtitulo: Addon service for downloading from Tusubtitulo.com, useful for English/Spanish speakers
 - repository.josecurioso.kodi: The repo itself
 
